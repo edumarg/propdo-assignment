@@ -26,14 +26,13 @@ const App = () => {
   const populateCurrencies = async () => {
     const response = await getCurrencies();
     const currencies = response.data.coins;
-
     setCurrenciesState(currencies);
   };
 
   useEffect(() => populateCurrencies(), []);
 
   const handleCompare = (currency) => {
-    console.log("HANDLE COMPARE", `${currency}`);
+    console.log("HANDLE COMPARE", currency);
     const myCurrencies = [...currenciesState];
     const index = myCurrencies.indexOf(currency);
     const currencyToAddCompare = myCurrencies[index];
@@ -45,7 +44,7 @@ const App = () => {
   };
 
   const handleDelete = (currency) => {
-    console.log("HANDLE DELETE", `${currency}`);
+    console.log("HANDLE DELETE", currency);
     let myCurrencies = [...currenciesState];
     myCurrencies = myCurrencies.filter((c) => c.name !== currency.name);
     setCurrenciesState(myCurrencies);

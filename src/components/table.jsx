@@ -87,14 +87,10 @@ const CurrencyTable = () => {
   };
 
   const handleChangePage = (event, newPage) => {
-    console.log("handle page change");
-    console.log("event", event);
-    console.log(newPage);
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log("handle rowschange");
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -107,6 +103,11 @@ const CurrencyTable = () => {
 
   const createSortHandler = (property) => (event) => {
     handleRequestSort(event, property);
+  };
+
+  const handleDeleteCurrency = (currency) => {
+    console.log("delete", currency);
+    deleteCurrency(currency);
   };
 
   const headCells = [
@@ -218,7 +219,6 @@ const CurrencyTable = () => {
                       >
                         <MenuItem
                           onClick={(event) => {
-                            console.log(currency);
                             handleCloseTableMenu(currency);
                             addToCompare(currency);
                           }}
@@ -227,9 +227,8 @@ const CurrencyTable = () => {
                         </MenuItem>
                         <MenuItem
                           onClick={() => {
-                            console.log(currency);
                             handleCloseTableMenu(currency);
-                            deleteCurrency(currency);
+                            handleDeleteCurrency(currency);
                           }}
                         >
                           Delete Row
