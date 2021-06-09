@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
+
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
@@ -26,7 +26,8 @@ const SideBar = (props) => {
   };
 
   const list = (
-    <div className={classes.toolbar}>
+    <div>
+      <div className={classes.toolbar} />
       <List>
         <NavLink to="/currencies">
           <ListItem button>
@@ -52,8 +53,7 @@ const SideBar = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <React.Fragment className={classes.root}>
-      <CssBaseline />
+    <React.Fragment>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
