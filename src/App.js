@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -10,11 +11,13 @@ import Charts from "./components/charts";
 import useStyles from "./styles/styles";
 
 import "font-awesome/css/font-awesome.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const classes = useStyles();
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className={classes.root}>
         <CssBaseline />
         <SideBar />
