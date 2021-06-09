@@ -7,3 +7,7 @@ import http from "./httpServices";
 export const getCurrencies = () => {
   return http.get("/coins?skip=0&limit=100&currency=USD");
 };
+
+export const getCurrencyChart = (currency, period) => {
+  return http.get(`/charts?period=${period}&coinId=${currency}`);
+};

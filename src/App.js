@@ -32,19 +32,19 @@ const App = () => {
   useEffect(() => populateCurrencies(), []);
 
   const handleCompare = (currency) => {
-    console.log("HANDLE COMPARE", currency);
-    const myCurrencies = [...currenciesState];
-    const index = myCurrencies.indexOf(currency);
-    const currencyToAddCompare = myCurrencies[index];
-    setCompareCurrenciesState((prevState) => [
-      ...prevState,
-      currencyToAddCompare,
-    ]);
-    console.log("Currencies to compare: ", compareCurrenciesState);
+    const myCurrenciesToCompare = [...compareCurrenciesState];
+    if (myCurrenciesToCompare.includes(currency)) {
+      return;
+    } else {
+      const currencyToAddCompare = currency;
+      setCompareCurrenciesState((prevState) => [
+        ...prevState,
+        currencyToAddCompare,
+      ]);
+    }
   };
 
   const handleDelete = (currency) => {
-    console.log("HANDLE DELETE", currency);
     let myCurrencies = [...currenciesState];
     myCurrencies = myCurrencies.filter((c) => c.name !== currency.name);
     setCurrenciesState(myCurrencies);

@@ -174,7 +174,7 @@ const CurrencyTable = () => {
                 .map((currency, index) => (
                   <TableRow key={currency.id}>
                     <TableCell component="th" scope="row">
-                      {currencies.indexOf(currency) + 1}
+                      {currency.rank}
                     </TableCell>
                     <TableCell align="center">
                       {currency.name}
