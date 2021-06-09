@@ -119,7 +119,7 @@ const CurrencyTable = () => {
       label: "Name",
     },
     {
-      id: "24Change",
+      id: "priceChange1d",
       label: "24H Change",
     },
     {
@@ -127,7 +127,7 @@ const CurrencyTable = () => {
       label: "Price",
     },
     {
-      id: "priceBTC",
+      id: "priceBtc",
       label: "Price in BTC",
     },
     {
@@ -135,7 +135,7 @@ const CurrencyTable = () => {
       label: "Market CAP",
     },
     {
-      id: "volume24H",
+      id: "volume",
       label: "Volume 24H",
     },
   ];
