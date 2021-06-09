@@ -4,6 +4,17 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  positiveChange: {
+    color: "green",
+  },
+
+  negativeChange: {
+    color: "red",
+  },
+
+  grey: {
+    color: "grey",
+  },
 });
 
 export default useStyles;

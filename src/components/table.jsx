@@ -11,7 +11,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 import useStyles from "./../styles/tableStyles";
 import CurrenciesContext from "./../context/currenciesContext";
@@ -19,6 +18,10 @@ import DeleteCurrencyContext from "./../context/deleteCurrencyContext";
 import AddToCompareContext from "./../context/addToCompareContext";
 
 const CurrencyTable = () => {
+  const BILLION = 1000000000;
+  const TRILLION = 1000000000000;
+  const MILLION = 1000000;
+
   const classes = useStyles();
 
   const currencies = useContext(CurrenciesContext);
@@ -41,6 +44,16 @@ const CurrencyTable = () => {
     setOpenTableMenus(tableMenus);
   };
   console.log("anchors: ", openTableMenus);
+
+  const handleTranformBigNum = (num) => {
+    if (Math.round(num).toString().length > 12)
+      return `${(num / TRILLION).toFixed(2)}T`;
+    if (Math.round(num).toString().length > 9)
+      return `${(num / BILLION).toFixed(2)}B`;
+    if (Math.round(num).toString().length > 6)
+      return `${(num / MILLION).toFixed(2)}M`;
+    return num.toFixed(2);
+  };
 
   return (
     <React.Fragment>
@@ -67,14 +80,28 @@ const CurrencyTable = () => {
                   <TableCell component="th" scope="row">
                     {currencies.indexOf(currency) + 1}
                   </TableCell>
-                  <TableCell align="center">{currency.name}</TableCell>
-                  <TableCell align="center">{currency.priceChange1d}</TableCell>
+                  <TableCell align="center">
+                    {currency.name}
+                    <span className={classes.grey}>-{currency.symbol}</span>
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    className={
+                      currency.priceChange1d >= 0
+                        ? classes.positiveChange
+                        : classes.negativeChange
+                    }
+                  >{`${currency.priceChange1d}%`}</TableCell>
                   <TableCell align="center">
                     {`$${currency.price.toFixed(2)}`}
                   </TableCell>
                   <TableCell align="center">{currency.priceBtc}</TableCell>
-                  <TableCell align="center">{`$${currency.marketCap}`}</TableCell>
-                  <TableCell align="center">{currency.volume}</TableCell>
+                  <TableCell align="center">
+                    {handleTranformBigNum(currency.marketCap)}
+                  </TableCell>
+                  <TableCell align="center">
+                    {handleTranformBigNum(currency.volume)}
+                  </TableCell>
                   <TableCell align="center">GRAPH</TableCell>
                   <TableCell align="center">
                     <IconButton
