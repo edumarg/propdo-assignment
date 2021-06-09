@@ -19,6 +19,32 @@ import CurrenciesContext from "./../context/currenciesContext";
 import DeleteCurrencyContext from "./../context/deleteCurrencyContext";
 import AddToCompareContext from "./../context/addToCompareContext";
 
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
 const CurrencyTable = () => {
   const BILLION = 1000000000;
   const TRILLION = 1000000000000;
@@ -33,6 +59,8 @@ const CurrencyTable = () => {
   const [openTableMenus, setOpenTableMenus] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("rank");
 
   const handleClickTableMenu = (currency, event) => {
     let tableMenus = [...openTableMenus];
@@ -71,6 +99,47 @@ const CurrencyTable = () => {
     setPage(0);
   };
 
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(event, property);
+  };
+
+  const headCells = [
+    {
+      id: "rank",
+      label: "#",
+    },
+    {
+      id: "name",
+      label: "Name",
+    },
+    {
+      id: "24Change",
+      label: "24H Change",
+    },
+    {
+      id: "price",
+      label: "Price",
+    },
+    {
+      id: "priceBTC",
+      label: "Price in BTC",
+    },
+    {
+      id: "marketCap",
+      label: "Market CAP",
+    },
+    {
+      id: "volume24H",
+      label: "Volume 24H",
+    },
+  ];
+
   return (
     <React.Fragment>
       <h2>Currencies Table</h2>
@@ -78,20 +147,28 @@ const CurrencyTable = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">#</TableCell>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">24H CHANGE</TableCell>
-              <TableCell align="center">PRICE</TableCell>
-              <TableCell align="center">PRICE IN BTC</TableCell>
-              <TableCell align="center">MARKET CAP</TableCell>
-              <TableCell align="center">VOLUME 24H</TableCell>
+              {headCells.map((headCell) => (
+                <TableCell
+                  key={headCell.id}
+                  align="center"
+                  sortDirection={orderBy === headCell.id ? order : false}
+                >
+                  <TableSortLabel
+                    active={orderBy === headCell.id}
+                    direction={orderBy === headCell.id ? order : "asc"}
+                    onClick={createSortHandler(headCell.id)}
+                  >
+                    {headCell.label}
+                  </TableSortLabel>
+                </TableCell>
+              ))}
               <TableCell align="center">PRICE GRAPH (7D)</TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {currencies &&
-              currencies
+              stableSort(currencies, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((currency, index) => (
                   <TableRow key={currency.id}>
