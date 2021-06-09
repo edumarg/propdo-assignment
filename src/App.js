@@ -16,24 +16,24 @@ import "font-awesome/css/font-awesome.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const [currencies, setCurrenciesState] = useState();
+  const [currenciesState, setCurrenciesState] = useState();
 
   const populateCurrencies = async () => {
     const response = await getCurrencies();
-    const currencies = response.data;
+    const currencies = response.data.coins;
     setCurrenciesState(currencies);
   };
 
   useEffect(() => populateCurrencies(), []);
 
-  console.log("currencies: ", currencies);
+  console.log("currencies: ", currenciesState);
 
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <ToastContainer />
-      <CurrenciesContext.Provider value={currencies}>
+      <CurrenciesContext.Provider value={currenciesState}>
         <div className={classes.root}>
           <CssBaseline />
           <SideBar />

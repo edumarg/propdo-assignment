@@ -32,7 +32,7 @@ const SideBar = (props) => {
         <NavLink to="/currencies">
           <ListItem button>
             <ListItemIcon>
-              <i class="fa fa-btc" aria-hidden="true"></i>
+              <i className="fa fa-btc" aria-hidden="true"></i>
             </ListItemIcon>
             <ListItemText> Currencies</ListItemText>
           </ListItem>
@@ -40,7 +40,7 @@ const SideBar = (props) => {
         <NavLink to="/charts">
           <ListItem button>
             <ListItemIcon>
-              <i class="fa fa-line-chart" aria-hidden="true"></i>
+              <i className="fa fa-line-chart" aria-hidden="true"></i>
             </ListItemIcon>
             <ListItemText> Charts</ListItemText>
           </ListItem>
@@ -76,7 +76,7 @@ const SideBar = (props) => {
           <Drawer
             container={container}
             variant="temporary"
-            anchor="up"
+            anchor="top"
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
