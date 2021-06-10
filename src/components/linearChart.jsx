@@ -39,38 +39,38 @@ const LineChart = () => {
     const myLabels = [];
     if (!currenciesToCompare[0]) return;
     const data = await getCurrencieData(currenciesToCompare[0]);
-    data.map((price) => {
-      myLabels.push(new Date(price[0] * 1000));
-    });
+    data.map((price) => myLabels.push(new Date(price[0] * 1000)));
     let myData = { ...dataState };
     console.log("labels", myLabels);
     myData.labels = myLabels;
-    setDataState(myData);
+    setDataState((prevState) => ({ ...prevState, labels: myLabels }));
   };
 
-  const createDatasets = (currencies) => {
+  const createDatasets = async (currencies) => {
     const datasets = [];
-    currencies.map(async (currency) => {
-      const data = [];
-      const label = currency.symbol;
-      const prices = await getCurrencieData(currency);
-      prices.map((price) => data.push(price[1].toFixed(2)));
-      const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-      const yAxisID = label;
-      const dataset = {
-        label,
-        data,
-        fill: false,
-        backgroundColor: color,
-        borderColor: color,
-        yAxisID,
-      };
-      datasets.push(dataset);
-    });
+    await Promise.all(
+      currencies.map(async (currency) => {
+        const data = [];
+        const label = currency.symbol;
+        const prices = await getCurrencieData(currency);
+        prices.map((price) => data.push(price[1].toFixed(2)));
+        const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        const yAxisID = label;
+        const dataset = {
+          label,
+          data,
+          fill: false,
+          backgroundColor: color,
+          borderColor: color,
+          yAxisID,
+        };
+        datasets.push(dataset);
+      })
+    );
     console.log("data sets", datasets);
     let myData = { ...dataState };
     myData.datasets = datasets;
-    setDataState(myData);
+    setDataState((prevState) => ({ ...prevState, datasets }));
   };
 
   useEffect(() => {
