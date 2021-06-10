@@ -41,7 +41,6 @@ const LineChart = () => {
     const data = await getCurrencieData(currenciesToCompare[0]);
     data.map((price) => myLabels.push(new Date(price[0] * 1000)));
     let myData = { ...dataState };
-    console.log("labels", myLabels);
     myData.labels = myLabels;
     setDataState((prevState) => ({ ...prevState, labels: myLabels }));
   };
@@ -67,7 +66,6 @@ const LineChart = () => {
         datasets.push(dataset);
       })
     );
-    console.log("data sets", datasets);
     let myData = { ...dataState };
     myData.datasets = datasets;
     setDataState((prevState) => ({ ...prevState, datasets }));
@@ -76,7 +74,7 @@ const LineChart = () => {
   useEffect(() => {
     createXaxisLabels();
     createDatasets(currenciesToCompare);
-  }, []);
+  }, [currenciesToCompare]);
 
   return <Line data={dataState} options={options} />;
 };
