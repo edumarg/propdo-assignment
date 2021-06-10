@@ -177,6 +177,14 @@ const CurrencyTable = () => {
                       {currency.rank}
                     </TableCell>
                     <TableCell align="center">
+                      <div className={classes.icon}>
+                        <img
+                          src={currency.icon}
+                          alt={`${currency.name} icon`}
+                          width="25"
+                          height="25"
+                        ></img>
+                      </div>
                       {currency.name}
                       <span className={classes.grey}>-{currency.symbol}</span>
                     </TableCell>

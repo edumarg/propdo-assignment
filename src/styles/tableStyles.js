@@ -15,6 +15,10 @@ const useStyles = makeStyles({
   grey: {
     color: "grey",
   },
+  icon: {
+    marginTop: 2,
+    marginRight: 2,
+  },
 });
 
 export default useStyles;

@@ -31,7 +31,7 @@ const App = () => {
 
   useEffect(() => populateCurrencies(), []);
 
-  const handleCompare = (currency) => {
+  const handleAddCompare = (currency) => {
     const myCurrenciesToCompare = [...compareCurrenciesState];
     if (myCurrenciesToCompare.includes(currency)) {
       return;
@@ -41,6 +41,15 @@ const App = () => {
         ...prevState,
         currencyToAddCompare,
       ]);
+    }
+  };
+
+  const handleRemoveCompare = (currency) => {
+    const myCurrenciesToCompare = [...compareCurrenciesState];
+    if (!myCurrenciesToCompare.includes(currency)) {
+      return;
+    } else {
+      myCurrenciesToCompare.filter((c) => currency.id !== c.id);
     }
   };
 
@@ -58,7 +67,7 @@ const App = () => {
           value={(currency) => handleDelete(currency)}
         >
           <AddToCompareContext.Provider
-            value={(currency) => handleCompare(currency)}
+            value={(currency) => handleAddCompare(currency)}
           >
             <CompareCurrenciesContext.Provider value={compareCurrenciesState}>
               <div className={classes.root}>
