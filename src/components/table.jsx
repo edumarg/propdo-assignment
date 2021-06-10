@@ -163,7 +163,6 @@ const CurrencyTable = () => {
                   </TableSortLabel>
                 </TableCell>
               ))}
-              <TableCell align="center">PRICE GRAPH (7D)</TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -206,7 +205,6 @@ const CurrencyTable = () => {
                     <TableCell align="center">
                       {handleTranformBigNum(currency.volume)}
                     </TableCell>
-                    <TableCell align="center">GRAPH</TableCell>
                     <TableCell align="center">
                       <IconButton
                         aria-label={`${currency.name}-more`}

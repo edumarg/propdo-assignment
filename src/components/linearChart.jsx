@@ -31,7 +31,7 @@ const LineChart = () => {
   const [optionsState, setOptionsState] = useState({});
 
   const getCurrencieData = async (currency, period) => {
-    const response = await getCurrencyChart(currency.id, (period = "1w"));
+    const response = await getCurrencyChart(currency.id, (period = "1y"));
     return response.data.chart;
   };
 
