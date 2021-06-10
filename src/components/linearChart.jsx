@@ -1,6 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+
 import CompareCurrenciesContext from "./../context/compareCurrenciesContext";
 
 import { getCurrencyChart } from "../services/currenciesServices";
@@ -29,10 +34,16 @@ const LineChart = () => {
 
   const [dataState, setDataState] = useState({ labels: [], datasets: [] });
   const [optionsState, setOptionsState] = useState({});
+  const [periodState, setPeriodState] = React.useState("24h");
 
   const getCurrencieData = async (currency, period) => {
-    const response = await getCurrencyChart(currency.id, (period = "1y"));
+    const response = await getCurrencyChart(currency.id, periodState);
     return response.data.chart;
+  };
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setPeriodState(event.target.value);
   };
 
   const createXaxisLabels = async () => {
@@ -74,9 +85,32 @@ const LineChart = () => {
   useEffect(() => {
     createXaxisLabels();
     createDatasets(currenciesToCompare);
-  }, [currenciesToCompare]);
+  }, [currenciesToCompare, periodState]);
 
-  return <Line data={dataState} options={options} />;
+  return (
+    <React.Fragment>
+      <div>
+        <FormControl variant="filled">
+          <InputLabel id="demo-simple-select-filled-label">Period</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={periodState}
+            onChange={(event) => handleChange(event)}
+          >
+            <MenuItem value="24h">24H</MenuItem>
+            <MenuItem value="1w">1 week</MenuItem>
+            <MenuItem value="1m">1 month</MenuItem>
+            <MenuItem value="3m">3 months</MenuItem>
+            <MenuItem value="6m">6 months</MenuItem>
+            <MenuItem value="1y">1 year</MenuItem>
+            <MenuItem value="all">All</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      <Line data={dataState} options={options} />
+    </React.Fragment>
+  );
 };
 
 export default LineChart;
