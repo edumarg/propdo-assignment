@@ -71,7 +71,13 @@ const SideBar = (props) => {
             Cryptocurrencies{" "}
           </Typography>
           <div>
-            <img src={logo} width="30" height="30" className={classes.logo} />
+            <img
+              src={logo}
+              width="30"
+              height="30"
+              className={classes.logo}
+              alt="cryptocurency logo"
+            />
           </div>
         </Toolbar>
       </AppBar>
