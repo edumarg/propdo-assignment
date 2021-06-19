@@ -16,6 +16,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import useStyles from "../styles/drawerStyles";
 
+import logo from "../cryptocurrency.png";
+
 const SideBar = (props) => {
   const { window } = props;
   const classes = useStyles();
@@ -66,8 +68,11 @@ const SideBar = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Cryptocurrencies
+            Cryptocurrencies{" "}
           </Typography>
+          <div>
+            <img src={logo} width="30" height="30" className={classes.logo} />
+          </div>
         </Toolbar>
       </AppBar>
 

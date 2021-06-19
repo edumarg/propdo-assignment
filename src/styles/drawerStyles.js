@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
   },
+
+  logo: {
+    marginLeft: 7,
+  },
 }));
 
 export default useStyles;
