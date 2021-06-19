@@ -62,16 +62,14 @@ const CurrencyTable = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("rank");
 
-  const handleClickTableMenu = (currency, event) => {
+  const handleClickTableMenu = (currency, index, event) => {
     let tableMenus = [...openTableMenus];
-    const index = currencies.indexOf(currency);
     tableMenus[index] = event.currentTarget;
     setOpenTableMenus(tableMenus);
   };
 
-  const handleCloseTableMenu = (currency) => {
+  const handleCloseTableMenu = (index) => {
     let tableMenus = [...openTableMenus];
-    const index = currencies.indexOf(currency);
     tableMenus[index] = null;
     setOpenTableMenus(tableMenus);
   };
@@ -106,7 +104,6 @@ const CurrencyTable = () => {
   };
 
   const handleDeleteCurrency = (currency) => {
-    console.log("delete", currency);
     deleteCurrency(currency);
   };
 
@@ -211,7 +208,7 @@ const CurrencyTable = () => {
                         aria-controls={`${currency.name}-menu`}
                         aria-haspopup="true"
                         onClick={(event) =>
-                          handleClickTableMenu(currency, event)
+                          handleClickTableMenu(currency, index, event)
                         }
                       >
                         <MenuIcon />
@@ -221,11 +218,11 @@ const CurrencyTable = () => {
                         anchorEl={openTableMenus[index]}
                         keepMounted
                         open={Boolean(openTableMenus[index])}
-                        onClose={(event) => handleCloseTableMenu(currency)}
+                        onClose={(event) => handleCloseTableMenu(index)}
                       >
                         <MenuItem
                           onClick={(event) => {
-                            handleCloseTableMenu(currency);
+                            handleCloseTableMenu(index);
                             addToCompare(currency);
                           }}
                         >
@@ -233,7 +230,7 @@ const CurrencyTable = () => {
                         </MenuItem>
                         <MenuItem
                           onClick={() => {
-                            handleCloseTableMenu(currency);
+                            handleCloseTableMenu(index);
                             handleDeleteCurrency(currency);
                           }}
                         >

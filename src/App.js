@@ -46,7 +46,6 @@ const App = () => {
   };
 
   const handleRemoveCompare = (currency) => {
-    console.log("hande remove currency", currency);
     let myCurrenciesToCompare = [...compareCurrenciesState];
     if (!myCurrenciesToCompare.includes(currency)) {
       return;
@@ -54,7 +53,6 @@ const App = () => {
       myCurrenciesToCompare = myCurrenciesToCompare.filter(
         (c) => c.name !== currency.name
       );
-      console.log("myCurrenciesToCompare", myCurrenciesToCompare);
       setCompareCurrenciesState(myCurrenciesToCompare);
     }
   };
